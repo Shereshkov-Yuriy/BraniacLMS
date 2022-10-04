@@ -274,3 +274,7 @@ cython_debug/
 
 # Local History for Visual Studio Code
 .history/
+
+# Ignore redis binary dump (dump.rdb) files
+
+*.rdb
