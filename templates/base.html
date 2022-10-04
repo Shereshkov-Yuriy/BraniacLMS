@@ -1,7 +1,7 @@
+{% load static %}
+
 <!doctype html>
 <html lang="ru">
-
-{% load static %}
 
 <head>
     <!-- Required meta tags -->
@@ -28,6 +28,10 @@
 <body>
 
 {% include 'includes/top_nav_panel.html' %}
+
+{% block messages %}
+{% include 'includes/messages.html' %}
+{% endblock messages %}
 
 <div class="container-md">
 
@@ -56,6 +60,22 @@
 
 <!-- FontAwesome -->
 <script src="{% static 'js/fontawesome.all.min.js' %}"></script>
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+
+          {% if messages %}
+          // Toasts
+          $(".toast").toast({ delay: 5000 });
+          $(".toast").toast("show");
+          {% endif %}
+
+        });
+
+    </script>
+{% endblock js %}
+
 </body>
 
 </html>
