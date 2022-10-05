@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static markdownify crispy_forms_tags %}
+{% load static markdownify crispy_forms_tags cache %}
 
 {% block title %}
 {{ course_object.name }}
@@ -57,6 +57,7 @@
 </div>
 <div class="accordion" id="accordionLessons">
 
+    {% cache 300 lessons %}
     {% for item in lessons %}
     <div class="card">
         <div class="card-header" id="headLessonPk{{ item.pk }}">
@@ -87,6 +88,7 @@
         </div>
     </div>
     {% endfor %}
+    {% endcache %}
 
 </div>
 <h3>Отзывы</h3>
@@ -97,7 +99,7 @@
     {% include 'mainapp/includes/feedback_card.html' %}
     {% endfor %}
     {% else %}
-    <p>
+    <p id="feedbackBeFirst">
         No feedback yet. Be first!
     </p>
     {% endif %}
@@ -130,6 +132,7 @@
     $("#feedbackSubmit").click(function () {
 
       $("#cardForm").hide();
+      $("#feedbackBeFirst").hide();
 
       var $form = $("#feedbackForm");
       $.ajax({
